@@ -40,6 +40,23 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['user/user/login'],
         ],
+        'mailer' => [
+            'class'             => Mailer::class,
+            'viewPath'          => '@app/mail',
+            'useFileTransport'  => false,
+            'transport'        => [
+                'scheme'   => $_ENV['MAILER_SCHEME'],
+                'host'     => $_ENV['MAILER_HOST'],
+                'port'     => $_ENV['MAILER_PORT'],
+                'username' => $_ENV['MAILER_USERNAME'],
+                'password' => $_ENV['MAILER_PASSWORD'],
+                'encryption' => $_ENV['MAILER_ENCRYPTION'],
+                'options' => [
+                    'verify_peer' => 0,
+                    'verify_peer_name' => 0,
+                ],
+            ],
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 1 : 0,
             'targets' => [
