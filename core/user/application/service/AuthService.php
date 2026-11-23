@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace core\user\application\service;
 
 use core\presentation\request\CreateUserRequest;
+use core\presentation\request\UpdateUserEmailRequest;
+use core\presentation\request\UpdateUserPasswordRequest;
 use core\user\domain\dto\UserDto;
 use core\user\domain\entity\User;
 use core\user\domain\repository\IUserRepository;
@@ -103,6 +105,37 @@ final class AuthService
             'token' => $token,
             'user' => UserDto::fromEntity($user),
         ];
+    }
+
+    public function emailChange(UserId $id, UpdateUserEmailRequest $request): UserDto
+    {
+        $user = $this->userRepository->findById($id);
+        if ($this->userRepository->existsByEmail(new Email($request->email))) {
+            throw new RuntimeException('Email already exists', 400);
+        }
+
+        $user->changeEmail(new Email($request->email));
+        $this->userRepository->save($user);
+
+        // Отправка письма с подтверждением
+        $this->sendVerificationEmail($user);
+
+        return UserDto::fromEntity($user);
+    }
+
+    public function passwordChange(UserId $id, UpdateUserPasswordRequest $request): void
+    {
+        $user = $this->userRepository->findById($id);
+        if (!$user->isEmailVerified()) {
+            throw new RuntimeException("Email not verified. Please verify your email before changing password.", 400);
+        }
+        if (!password_verify($request->oldPassword, $user->getPasswordHash())) {
+            throw new RuntimeException('Current password is incorrect', 401);
+        }
+
+        $newHash = password_hash($request->newPassword, PASSWORD_DEFAULT);
+        $user->changePasswordHash($newHash);
+        $this->userRepository->save($user);
     }
 
     /**

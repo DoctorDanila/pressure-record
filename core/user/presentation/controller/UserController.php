@@ -108,7 +108,7 @@ class UserController extends BaseController
             throw new RuntimeException('Validation failed: ' . json_encode($request->getErrors(), JSON_UNESCAPED_UNICODE), 400);
         }
 
-        $service = Yii::$container->get(UserService::class);
+        $service = Yii::$container->get(AuthService::class);
         $userDto = $service->emailChange(new UserId($id), $request);
         return $this->item($userDto);
     }
@@ -125,7 +125,7 @@ class UserController extends BaseController
             throw new RuntimeException('Validation failed: ' . json_encode($request->getErrors(), JSON_UNESCAPED_UNICODE), 400);
         }
 
-        $service = Yii::$container->get(UserService::class);
+        $service = Yii::$container->get(AuthService::class);
         $service->passwordChange(new UserId($id), $request);
         return $this->success();
     }

@@ -2,17 +2,11 @@
 
 namespace core\user\application\service;
 
-use core\presentation\request\CreateUserRequest;
-use core\presentation\request\UpdateUserEmailRequest;
-use core\presentation\request\UpdateUserPasswordRequest;
 use core\user\domain\dto\UserDto;
 use core\user\domain\dto\UserFiltersDto;
-use core\user\domain\entity\User;
 use core\user\domain\repository\IUserRepository;
-use core\user\domain\valueObject\Email;
 use core\user\domain\valueObject\UserId;
 use RuntimeException;
-use yii\mail\MailerInterface;
 
 final class UserService
 {
@@ -29,21 +23,6 @@ final class UserService
         // Ищем пользователя, для проверки существования
         $this->userRepository->findById($id);
         $this->userRepository->delete($id);
-    }
-
-    public function passwordChange(UserId $id, UpdateUserPasswordRequest $request): void
-    {
-        // TODO
-    }
-
-    public function emailChange(UserId $id, UpdateUserEmailRequest $request): UserDto
-    {
-        // TODO
-    }
-
-    public function validateEmail(Email $request): void
-    {
-        // TODO
     }
 
     public function getUserWithId(UserId $id): UserDto
