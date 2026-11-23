@@ -1,0 +1,35 @@
+{
+  "name": "doctordanila/pressure-record",
+  "description": "Сервис самоконтроля артериального давления (СКАД-дэшборд)",
+  "type": "project",
+  "require": {
+    "php": ">=8.1",
+    "yiisoft/yii2": "~2.0.45",
+    "vlucas/phpdotenv": "^5.6"
+  },
+  "require-dev": {
+    "doctordanila/scancore": "~v1.0.6",
+    "yidas/yii2-composer-bower-skip": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "core\\": "core/",
+      "config\\": "config/",
+      "web\\": "web/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Kuznetsov Danila",
+      "email": "KD89504730600@yandex.ru",
+      "homepage": "https://github.com/DoctorDanila",
+      "role": "Developer"
+    }
+  ],
+  "license": "proprietary",
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    }
+  }
+}
