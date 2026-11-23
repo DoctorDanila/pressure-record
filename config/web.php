@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use core\_internal\identity\UserIdentity;
+use core\user\presentation\middleware\AuthMiddleware;
 use yii\base\Module;
+use yii\symfonymailer\Mailer;
 use yii\web\Session;
 
 $db         = require __DIR__ . '/db.php';
@@ -17,6 +19,9 @@ $config = [
         '@webroot'  => dirname(__DIR__) . '/web',
         '@core'     => dirname(__DIR__) . '/core',
     ],
+    'on beforeRequest' => static function (): void {
+        Yii::$container->get(AuthMiddleware::class)->handle();
+    },
     'components' => [
         'db' => $db,
         'cache' => [
@@ -31,8 +36,8 @@ $config = [
         'session' => [
             'class' => Session::class,
             'cookieParams' => [
-                'httpOnly' => true,
-                'secure' => ($_ENV['APP_ENV'] ?? 'dev') === 'prod',
+                'httpOnly'  => true,
+                'secure'    => ($_ENV['APP_ENV'] ?? 'dev') === 'prod',
             ],
         ],
         'user' => [
@@ -44,16 +49,16 @@ $config = [
             'class'             => Mailer::class,
             'viewPath'          => '@app/mail',
             'useFileTransport'  => false,
-            'transport'        => [
-                'scheme'   => $_ENV['MAILER_SCHEME'],
-                'host'     => $_ENV['MAILER_HOST'],
-                'port'     => $_ENV['MAILER_PORT'],
-                'username' => $_ENV['MAILER_USERNAME'],
-                'password' => $_ENV['MAILER_PASSWORD'],
-                'encryption' => $_ENV['MAILER_ENCRYPTION'],
+            'transport'         => [
+                'scheme'        => $_ENV['MAILER_SCHEME'],
+                'host'          => $_ENV['MAILER_HOST'],
+                'port'          => $_ENV['MAILER_PORT'],
+                'username'      => $_ENV['MAILER_USERNAME'],
+                'password'      => $_ENV['MAILER_PASSWORD'],
+                'encryption'    => $_ENV['MAILER_ENCRYPTION'],
                 'options' => [
-                    'verify_peer' => 0,
-                    'verify_peer_name' => 0,
+                    'verify_peer'       => 0,
+                    'verify_peer_name'  => 0,
                 ],
             ],
         ],
