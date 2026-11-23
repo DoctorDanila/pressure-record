@@ -22,6 +22,12 @@ $config = [
     'on beforeRequest' => static function (): void {
         Yii::$container->get(AuthMiddleware::class)->handle();
     },
+    'modules' => [
+        'user' => [
+            'class' => Module::class,
+            'controllerNamespace' => 'core\user\presentation\controller',
+        ],
+    ],
     'components' => [
         'db' => $db,
         'cache' => [

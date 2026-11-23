@@ -13,6 +13,7 @@ return [
             'class' => MigrateController::class,
             'migrationPath' => null,
             'migrationNamespaces' => [
+                'core\user\infrastructure\migrations',
             ],
         ],
     ],
