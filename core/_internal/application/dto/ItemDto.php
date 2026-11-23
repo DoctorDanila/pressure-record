@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+namespace core\_internal\application\dto;
+
+use JsonSerializable;
+
+class ItemDto implements JsonSerializable
+{
+    public function __construct(
+        public mixed $item,
+    ) {
+    }
+
+    public function jsonSerialize(): array
+    {
+        return ['item' => $this->item];
+    }
+}
