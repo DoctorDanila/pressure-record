@@ -1,4 +1,13 @@
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . index.php [L]
+RewriteEngine On
+
+# API requests are handled by Yii2.
+RewriteCond %{REQUEST_URI} ^/api(/|$) [NC]
+RewriteRule ^ index.php [L,QSA]
+
+# Let Apache serve existing assets and files (including the Vite build).
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# All application routes are handled by the React SPA.
+RewriteRule ^ dist/index.html [L]
