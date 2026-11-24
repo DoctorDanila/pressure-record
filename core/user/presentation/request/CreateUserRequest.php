@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace core\presentation\request;
+namespace core\user\presentation\request;
 
 use yii\base\Model;
 use yii\web\UploadedFile;

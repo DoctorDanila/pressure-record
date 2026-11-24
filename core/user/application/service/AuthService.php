@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace core\user\application\service;
 
-use core\presentation\request\CreateUserRequest;
-use core\presentation\request\UpdateUserEmailRequest;
-use core\presentation\request\UpdateUserPasswordRequest;
+use core\user\presentation\request\CreateUserRequest;
+use core\user\presentation\request\UpdateUserEmailRequest;
+use core\user\presentation\request\UpdateUserPasswordRequest;
 use core\user\domain\dto\UserDto;
 use core\user\domain\entity\User;
 use core\user\domain\repository\IUserRepository;
@@ -21,7 +21,6 @@ final class AuthService
 {
     private const AUTH_TOKEN_BYTES = 32;
     private const HASH_ALGO = 'sha256';
-    private const VERIFY_TOKEN_TTL = 86400; // 24 часа
 
     public function __construct(
         private readonly IUserRepository $userRepository,
