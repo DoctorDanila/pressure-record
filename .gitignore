@@ -38,3 +38,7 @@ tests/_support/_generated
 #vagrant folder
 /.vagrant
 /vagrant
+
+/frontend/node_modules/
+/frontend/.env
+/web/dist/
