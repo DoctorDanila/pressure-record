@@ -6,7 +6,7 @@
 
 use yii\helpers\Url;
 
-$verifyUrl = Url::to(['/user/user/verify-email', 'id' => $userId, 'token' => $token], true);
+$verifyUrl = Url::to(['/verify-email', 'id' => $userId, 'token' => $token], true);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
