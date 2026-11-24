@@ -15,6 +15,7 @@ $config = [
     'id' => $_ENV['APP_NAME'] ?? 'PRESSURE RECORD',
     'basePath' => dirname(__DIR__),
     'language' => 'ru-RU',
+    'timeZone' => 'Europe/Moscow',
     'aliases' => [
         '@webroot'  => dirname(__DIR__) . '/web',
         '@core'     => dirname(__DIR__) . '/core',
@@ -27,6 +28,14 @@ $config = [
             'class' => Module::class,
             'controllerNamespace' => 'core\user\presentation\controller',
         ],
+        'record' => [
+            'class' => Module::class,
+            'controllerNamespace' => 'core\record\presentation\controller',
+        ],
+        'setting' => [
+            'class' => Module::class,
+            'controllerNamespace' => 'core\setting\presentation\controller',
+        ],
     ],
     'components' => [
         'db' => $db,
@@ -34,6 +43,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'request' => [
+            'scriptUrl' => '/index.php',
             'cookieValidationKey' => $_ENV['COOKIE_VALIDATION_KEY'],
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
@@ -86,6 +96,25 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                // Public SPA paths are served by Apache from /dist; API paths enter Yii
+                'api/auth/register'            => 'user/user/register',
+                'api/auth/login'                    => 'user/user/login',
+                'api/auth/logout'                   => 'user/user/logout',
+                'api/auth/me'                       => 'user/user/profile',
+                'api/auth/verify-email'             => 'user/user/verify-email',
+
+                'api/settings'                      => 'setting/setting/index',
+                'api/settings/update'               => 'setting/setting/update',
+                'api/devices/create'                => 'setting/setting/create-device',
+                'api/devices/<id:\d+>/delete'       => 'setting/setting/delete-device',
+
+                'api/records/dashboard'             => 'record/record/dashboard',
+                'api/records/export.csv'            => 'record/record/export',
+                'api/records/export.pdf'            => 'record/record/export-pdf',
+                'api/records/create'                => 'record/record/create',
+                'api/records/<id:\d+>/delete'       => 'record/record/delete',
+                'api/records/<id:\d+>'              => 'record/record/view',
+                'api/records'                       => 'record/record/index',
             ],
         ],
     ],
