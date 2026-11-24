@@ -17,6 +17,7 @@ use yii\base\Model;
 
 abstract class BaseController extends Controller
 {
+    public $enableCsrfValidation = false;
     public int $defaultPageSize = 20;
     public array $pageSizeLimit = [1, 1000];
 
